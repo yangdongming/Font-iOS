@@ -11,7 +11,6 @@
 @interface ViewController ()<UITableViewDelegate, UITableViewDataSource>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet UITextField *textField;
 
 @end
 
@@ -20,10 +19,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.title = @"15";
 }
 
-- (IBAction)changeSizeAction:(UIButton *)sender {
-    self.textField.text = [NSString stringWithFormat:@"%@", @(self.textField.text.integerValue + (sender.tag ? 1 : -1))];
+- (IBAction)changeSizeAction:(UIBarButtonItem *)sender {
+    self.title = [NSString stringWithFormat:@"%@", @(self.title.integerValue + ([sender.title isEqualToString:@"+"] ? 1 : -1))];
     [self.tableView reloadData];
 }
 
@@ -41,7 +41,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell"];
-    UIFont *font = [UIFont fontWithName:[UIFont familyNames][indexPath.section] size:self.textField.text.integerValue];
+    UIFont *font = [UIFont fontWithName:[UIFont familyNames][indexPath.section] size:self.title.integerValue];
     cell.textLabel.font = font;
     if (indexPath.row == 0) {
         cell.textLabel.text = @"中文样式";
